@@ -1,0 +1,14 @@
+!!! 5
+html(lang="en")
+  head
+    title=title
+  body
+    h1 #{title}
+    #note-group-list
+      ul
+        - each taskGroup in taskGroups
+          li #{taskGroup.name}
+    label New Group
+    form(action: '/groups', method: 'post')
+      input(type: 'text', name: 'group[name]')
+      input(type: 'submit', title: 'Create Group')
