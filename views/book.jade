@@ -1,16 +1,9 @@
-!!! 5
-html(lang="en")
-  head
-    title=title
-    script(src="http://cdn.socket.io/stable/socket.io.js")
-    script(src="/index.js")
-  body
-    h1 #{title}
-    .task-container
-      ul#task-list
-        - each task in tasks
-          li #{task.name}
+h1 #{title}
+.task-container
+  ul#task-list
+  - each task in tasks
+    li #{task.name}
+  form(action: '/books/#{taskBook._id}/tasks', method: 'post')
     label New Task
-    form(action: '/books/#{taskBook._id}/tasks', method: 'post')
       input(type: 'text', name: 'task[name]')
-      input(type: 'submit', title: 'Create Task')
+    input(type: 'submit', title: 'Create Task')

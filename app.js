@@ -20,7 +20,6 @@ app.configure(function(){
   app.use(express.staticProvider(__dirname + '/public'));
 
   app.set("view engine", "jade");
-  app.set("view options", { layout: false } )
 });
 
 app.configure('development', function(){

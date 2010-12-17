@@ -1,18 +1,11 @@
-!!! 5
-html(lang="en")
-  head
-    title=title
-    script(src="http://cdn.socket.io/stable/socket.io.js");
-    script(src="/index.js");
-  body
-    h1 #{title}
-    .task-book-container
-      ul#task-books-list
-        - each taskBook in taskBooks
-          - var path = "/books/" + taskBook._id.toHexString();
-          li 
-            a(href=path) #{taskBook.name}
+h1 #{title}
+.task-book-container
+  ul#task-books-list
+  - each taskBook in taskBooks
+    - var path = "/books/" + taskBook._id.toHexString();
+    li 
+      a(href=path) #{taskBook.name}
+  form(action: '/books', method: 'post')
     label New Book
-    form(action: '/books', method: 'post')
       input(type: 'text', name: 'book[name]')
-      input(type: 'submit', title: 'Create Book')
+    input(type: 'submit', title: 'Create Book')
