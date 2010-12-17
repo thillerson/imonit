@@ -6,11 +6,13 @@ html(lang="en")
     script(src="/index.js");
   body
     h1 #{title}
-    .task-group-container
-      ul#task-groups-list
-        - each taskGroup in taskGroups
-          li #{taskGroup.name}
-    label New Group
-    form(action: '/groups', method: 'post')
-      input(type: 'text', name: 'group[name]')
-      input(type: 'submit', title: 'Create Group')
+    .task-book-container
+      ul#task-books-list
+        - each taskBook in taskBooks
+          - var path = "/books/" + taskBook._id.toHexString();
+          li 
+            a(href=path) #{taskBook.name}
+    label New Book
+    form(action: '/books', method: 'post')
+      input(type: 'text', name: 'book[name]')
+      input(type: 'submit', title: 'Create Book')

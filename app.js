@@ -32,26 +32,41 @@ app.configure('production', function(){
 });
 
 app.get('/', function(req, res) {
-  var taskGroups = TaskGroup.find().all (function(taskGroups) {
-    console.log('task groups' + taskGroups);
+  var taskBooks = TaskBook.find().all (function(taskBooks) {
     res.render('index',{
       locals: {
-        title: 'Task Groups',
-        taskGroups: taskGroups
+        title: 'Task Books',
+        taskBooks: taskBooks
       }
     });
   });
-})
+});
 
-app.post('/groups', function(req, res) {
-  var groupParams = req.body.group;
-  var taskGroup = new TaskGroup();
-  taskGroup.name = groupParams['name'];
-  taskGroup.save(function() {
-    console.log('saved task group: ' + groupParams['name']);
-    socket.broadcast(JSON.stringify(taskGroup));
+app.post('/books', function(req, res) {
+  var bookParams = req.body.book;
+  var taskBook = new TaskBook();
+  taskBook.name = bookParams['name'];
+  taskBook.save(function() {
+    console.log('saved task book: ' + bookParams['name']);
+    message = { type: "book-created", book: taskBook};
+    socket.broadcast( JSON.stringify(message) );
   });
   res.redirect('/');
-})
+});
+
+app.get('/books/:id', function(req, res) {
+  TaskBook.findById(req.params.id, function(taskBook) {
+    if (taskBook) {
+      res.render('book',{
+        locals: {
+          title: 'Tasks for ' + taskBook.name,
+          tasks: []
+        }
+      });
+    } else {
+      res.send('Not Found', 404);
+    }
+  });
+});
 
 app.listen('3000');
