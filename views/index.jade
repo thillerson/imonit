@@ -2,10 +2,12 @@
 html(lang="en")
   head
     title=title
+    script(src="http://cdn.socket.io/stable/socket.io.js");
+    script(src="/index.js");
   body
     h1 #{title}
-    #note-group-list
-      ul
+    .task-group-container
+      ul#task-groups-list
         - each taskGroup in taskGroups
           li #{taskGroup.name}
     label New Group

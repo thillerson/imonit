@@ -1,12 +1,16 @@
 require.paths.unshift('vendor/mongoose');
-var mongoose = require('mongoose').Mongoose;
 require('./models/models.js');
+
+var http = require('http');
+var io = require('socket.io');
+var mongoose = require('mongoose').Mongoose;
 var db = mongoose.connect('mongodb://localhost/imonit');
 
 var express = require('express');
 var jade = require('jade');
 
 var app = express.createServer();
+var socket = io.listen(app)
 
 app.configure(function(){
   // app.use(app.router);
@@ -45,6 +49,7 @@ app.post('/groups', function(req, res) {
   taskGroup.name = groupParams['name'];
   taskGroup.save(function() {
     console.log('saved task group: ' + groupParams['name']);
+    socket.broadcast(JSON.stringify(taskGroup));
   });
   res.redirect('/');
 })
