@@ -3,5 +3,11 @@ html(lang="en")
   head
     title=title
     script(src="http://cdn.socket.io/stable/socket.io.js")
-    script(src="/index.js")
+    - var standardScripts = ["jquery-1.4.js", "jquery-ui-1.7.2.custom.min.js", "jquery.roundCorners.js", "json2.min.js"];
+    - each script in standardScripts
+      - var scriptPath = "/" + script;
+        script(src=scriptPath)
+    - each script in extraScripts
+      - var scriptPath = "/" + script;
+        script(src=scriptPath)
   body!= body

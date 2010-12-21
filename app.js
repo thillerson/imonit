@@ -35,7 +35,8 @@ app.get('/', function(req, res) {
     res.render('index',{
       locals: {
         title: 'Task Books',
-        taskBooks: taskBooks
+        taskBooks: taskBooks,
+        extraScripts: ["index.js"]
       }
     });
   });
@@ -59,7 +60,8 @@ app.get('/books/:id', function(req, res) {
       res.render('book',{
         locals: {
           title: 'Tasks for ' + taskBook.name,
-          tasks: []
+          tasks: [],
+          extraScripts: ["books.js"]
         }
       });
     } else {
