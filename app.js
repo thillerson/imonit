@@ -54,17 +54,21 @@ app.post('/books', function(req, res) {
   res.redirect('/');
 });
 
-app.get('/books/:id', function(req, res) {
+app.get('/books/:id.:format?', function(req, res) {
   TaskBook.findById(req.params.id, function(taskBook) {
     if (taskBook) {
-      res.render('book',{
-        locals: {
-          title: 'Tasks for ' + taskBook.name,
-          taskBook: taskBook,
-          tasks: [],
-          extraScripts: ["books.js"]
-        }
-      });
+      if (req.params.format == "json") {
+        res.send(taskBook, {'Content-Type':'application/json; charset=utf-8'}, 200 )
+      } else {
+        res.render('book',{
+          locals: {
+            title: 'Tasks for ' + taskBook.name,
+            taskBook: taskBook,
+            tasks: taskBook.tasks,
+            extraScripts: ["books.js"]
+          }
+        });
+      }
     } else {
       res.send('Not Found', 404);
     }
@@ -77,6 +81,9 @@ app.post('/books/:id/tasks', function(req, res) {
     if (taskBook) {
       taskBook.tasks.push({name: taskParams['name']});
       taskBook.save(function(){
+        console.log("saved task:" + taskParams['name']);
+        message = { type: "task-created", bookId: taskBook._id.toHexString()}
+        socket.broadcast( JSON.stringify(message) );
       });
       res.redirect('/books/' + taskBook._id.toHexString() );
     } else {
