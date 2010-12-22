@@ -2,7 +2,7 @@ require.paths.unshift('vendor/mongoose');
 var mongoose = require('mongoose').Mongoose;
 
 mongoose.model('TaskBook', {
-  properties: ['name'],
+  properties: ['name', {tasks:[['name', 'complete']]}],
 
   indexes: ['name']
 });

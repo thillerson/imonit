@@ -60,10 +60,25 @@ app.get('/books/:id', function(req, res) {
       res.render('book',{
         locals: {
           title: 'Tasks for ' + taskBook.name,
+          taskBook: taskBook,
           tasks: [],
           extraScripts: ["books.js"]
         }
       });
+    } else {
+      res.send('Not Found', 404);
+    }
+  });
+});
+
+app.post('/books/:id/tasks', function(req, res) {
+  var taskParams = req.body.task;
+  TaskBook.findById(req.params.id, function(taskBook) {
+    if (taskBook) {
+      taskBook.tasks.push({name: taskParams['name']});
+      taskBook.save(function(){
+      });
+      res.redirect('/books/' + taskBook._id.toHexString() );
     } else {
       res.send('Not Found', 404);
     }

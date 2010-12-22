@@ -3,7 +3,8 @@ h1 #{title}
   ul#task-list
   - each task in tasks
     li #{task.name}
-  form(action: '/books/#{taskBook._id}/tasks', method: 'post')
+  - var formPath = '/books/' + taskBook._id.toHexString() + '/tasks';
+  form(action:formPath , method: 'post')
     label New Task
       input(type: 'text', name: 'task[name]')
     input(type: 'submit', title: 'Create Task')
