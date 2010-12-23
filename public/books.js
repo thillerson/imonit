@@ -20,24 +20,21 @@ function updateTaskList(taskBook) {
   $("#task-list").effect("highlight", {}, 1500);
 }
 
-socket = new io.Socket('localhost');
-socket.connect();
-socket.on('message', function(data){
-  var message = JSON.parse(data);
-  var messageType = message['type'];
-  switch(messageType) {
-  case "task-created" :
-    var bookId = message['bookId'];
-    if (bookId == currentBookId()) {
-      $.ajax({ url: '/books/' + bookId + ".json",
-               success: function(data) {
-                 updateTaskList(JSON.parse(data));
-               }
-             });
+$(document).ready(function() {
+  var socket = jQuery.data(document.body, 'socket');
+  socket.on('message', function(data){
+    var message = JSON.parse(data);
+    var messageType = message['type'];
+    switch(messageType) {
+    case "task-created" :
+      var bookId = message['bookId'];
+      if (bookId == currentBookId()) {
+        $.ajax({ url: '/books/' + bookId + ".json",
+                 success: function(data) {
+                   updateTaskList(data);
+                 }
+               });
+      }
     }
-  }
+  });
 });
-
-  
-    
-             

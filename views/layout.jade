@@ -3,7 +3,7 @@ html(lang="en")
   head
     title=title
     script(src="http://cdn.socket.io/stable/socket.io.js")
-    - var standardScripts = ["jquery-1.4.js", "jquery-ui-1.7.2.custom.min.js", "jquery.roundCorners.js", "json2.min.js"];
+    - var standardScripts = ["jquery-1.4.js", "jquery-ui-1.7.2.custom.min.js", "jquery.roundCorners.js", "json2.min.js", "application.js"];
     - each script in standardScripts
       - var scriptPath = "/" + script;
         script(src=scriptPath)
