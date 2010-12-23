@@ -7,14 +7,14 @@ var mongoose = require('mongoose').Mongoose;
 var db = mongoose.connect('mongodb://localhost/imonit');
 
 var express = require('express');
+var connect = require('connect');
 var jade = require('jade');
 
-var app = express.createServer();
+var app = express.createServer(connect.bodyDecoder());
 var socket = io.listen(app)
 
 app.configure(function(){
   app.use(express.methodOverride());
-  app.use(express.bodyDecoder());
   app.use(app.router);
   app.use(express.staticProvider(__dirname + '/public'));
   app.use(express.logger());
