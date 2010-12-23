@@ -13,10 +13,10 @@ var app = express.createServer();
 var socket = io.listen(app)
 
 app.configure(function(){
-  // app.use(app.router);
   app.use(express.bodyDecoder());
   app.use(express.methodOverride());
   app.use(express.logger());
+  app.use(app.router);
   app.use(express.staticProvider(__dirname + '/public'));
 
   app.set("view engine", "jade");
