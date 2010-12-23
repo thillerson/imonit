@@ -43,7 +43,7 @@ app.get('/', function(req, res) {
 });
 
 app.post('/books', function(req, res) {
-  console.log("body: " + body);
+  console.log("body: " + req.body);
   var bookParams = req.body.book;
   var taskBook = new TaskBook();
   taskBook.name = bookParams['name'];
