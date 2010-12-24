@@ -1,5 +1,68 @@
 body {
-  padding: 50px 80px;
-  font: 14px "Helvetica Nueue", "Lucida Grande", Arial, sans-serif;
-  background: #000;
-  color: #FFF;}
+  margin: 0;
+  font: 11px/1.5 verdana, sans-serif; 
+  background: #E0E0E0;
+  color: #000;}
+
+a {
+  color: #266C1B;
+}
+
+h1 {
+  font-family: "Helvetica Neue", "Helvetica", "Arial", serif;
+  color: #266C1B;
+  margin: 1;
+  padding: 1px 8px;
+  font-size: 3.1em; }
+
+h2 {
+  font-size: 1.8em; 
+  color: #A8F000}
+
+form label {
+  font-size: 1.2em; 
+  font-weight: bold;
+  display: block;
+  color: #A8F000}
+
+form input {
+  display: block;
+  background-color: #5DCFC3;
+  border: solid 1px #00675C;
+}
+
+input[type=submit] {
+   font-size: 1.2em;
+   text-transform: uppercase;
+   color: #FFF;
+   background-color: #5DCFC3;
+   background-image: -moz-linear-gradient(
+      #1E776D, #00675C
+   );
+   background-image: -webkit-gradient(linear, 0 0, 0 100%,
+      color-stop(0, #1E776D), color-stop(1, #00675C)
+   );
+   -moz-border-radius: 8px;
+   border-radius: 8px;
+}
+.header {
+  background: #52E93A;
+  margin: 0;
+  border-top: 20px solid #99E48D;
+  border-right: 20px solid #99E48D; 
+  border-left: 20px solid #99E48D; 
+  padding: 10 10;}
+
+.footer {
+  background: #CFF76F;
+  margin: 20px 0px 0px;
+  border-top: 1px solid #A8F000;
+  border-right: 1px solid #A8F000; 
+  border-left: 1px solid #A8F000; 
+  border-bottom: 1px solid #A8F000;
+  text-align: center;}
+
+.task-container {
+  background: #FFF;
+  margin: 2px 20px;
+  padding: 10px;}

@@ -1,11 +1,15 @@
-h1 #{title}
-.task-book-container
+.header
+  h1 Imonit - Live Task Manager
+.task-container
+  h2 #{title}
   ul#task-books-list
     - each taskBook in taskBooks
       - var path = "/books/" + taskBook._id.toHexString();
       li
         a(href=path) #{taskBook.name}
   form(action: '/books', method: 'post')
-    label New Book
+    label New Book:
       input(type: 'text', name: 'book[name]')
     input(type: 'submit', title: 'Create Book')
+  .footer
+    |About | Blog

@@ -1,5 +1,7 @@
-h1 #{title}
+.header
+  h1 Imonit - Live Task Manager
 .task-container
+  h2 #{title}
   ul#task-list
     - each task in tasks
       li #{task.name}
@@ -8,3 +10,5 @@ h1 #{title}
     label New Task
       input(type: 'text', name: 'task[name]')
     input(type: 'submit', title: 'Create Task')
+  .footer
+    |About | Blog
