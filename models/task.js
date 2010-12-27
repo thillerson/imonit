@@ -1,14 +1,13 @@
 require.paths.unshift('vendor/mongoose');
 var mongoose = require('mongoose').Mongoose;
+ObjectID = require('mongodb').ObjectID
 
 mongoose.model('Task', {
-  properties: ['name', 'complete'],
+  properties: ['name', 'complete', 'taskBookId'],
 
   cast: {
-    complete: Boolean
-  },
-
-  indexes: ['name']
+    taskBookId: ObjectID
+  }
 });
 
 exports.Task = function(db) {

@@ -2,9 +2,14 @@
   h1 Imonit - Live Task Manager
 .task-container
   h2 #{title}
-  ul#task-list
-    - each task in tasks
-      li #{task.name}
+    ul#task-list
+      - each task in tasks
+        - var toggleCheckPath = '/tasks/' + task._id.toHexString() + '/toggle_complete?_method=put'
+        - var checkedImgSrc = (task.complete) ? '/images/checked.gif' : '/images/unchecked.png'
+        li
+          a(href: toggleCheckPath)
+            img(src: checkedImgSrc)
+          #{task.name}
   - var formPath = '/books/' + taskBook._id.toHexString() + '/tasks';
   form(action:formPath , method: 'post')
     label New Task

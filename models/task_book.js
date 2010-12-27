@@ -3,13 +3,7 @@ var mongoose = require('mongoose').Mongoose;
 
 
 mongoose.model('TaskBook', {
-  properties: ['name', {tasks:[]}],
-
-  cast: {
-    tasks: Task
-  },
-
-  indexes: ['name']
+  properties: ['name']
 });
 
 exports.TaskBook = function(db) {
