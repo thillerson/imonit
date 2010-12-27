@@ -79,9 +79,10 @@ app.post('/books/:id/tasks', function(req, res) {
   var taskParams = req.body.task;
   TaskBook.findById(req.params.id, function(taskBook) {
     if (taskBook) {
-      taskBook.tasks.push({name: taskParams['name']});
+      taskBook.tasks.push({name: taskParams['name'], complete: false});
       taskBook.save(function(){
-        console.log("saved task:" + taskParams['name']);
+        console.log("saved taskBook:");
+        console.log(taskBook);
         message = { type: "task-created", bookId: taskBook._id.toHexString()}
         socket.broadcast( JSON.stringify(message) );
       });
