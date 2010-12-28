@@ -59,7 +59,7 @@ app.get('/books/:id.:format?', function(req, res) {
     if (taskBook) {
       Task.find({taskBookId:new ObjectID(req.params.id)}).all(function(tasks) {
         if (req.params.format == "json") {
-          res.send(taskBook, {'Content-Type':'application/json; charset=utf-8'}, 200 )
+          res.send(tasks, {'Content-Type':'application/json; charset=utf-8'}, 200 )
         } else {
           res.render('book',{
             locals: {
@@ -86,7 +86,7 @@ app.post('/books/:id/tasks', function(req, res) {
       task.complete = false;
       task.taskBookId = taskBook._id;
       task.save(function(){
-        message = { type: "task-created", task: task};
+        message = { type: "task-created", task: task, taskBookId: taskBook._id.toHexString()};
         socket.broadcast( JSON.stringify(message) );
       });
       res.redirect('/books/' + taskBook._id.toHexString() );
@@ -103,7 +103,7 @@ app.get('/tasks/:id/toggle_complete', function(req, res) {
     if (task) {
       task.complete = !task.complete
       task.save(function() {
-        message = { type: "task-updated", task: task};
+        message = { type: "task-toggled", task: task, taskBookId: task.taskBookId.toHexString()};
         socket.broadcast( JSON.stringify(message) );
       });
       res.redirect('/books/' + task.taskBookId.toHexString() );

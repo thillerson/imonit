@@ -11,11 +11,14 @@ function currentBookId() {
   return id;
 }
 
-function updateTaskList(taskBook) {
-  var tasks = taskBook.tasks;
+function updateTaskList(tasks) {
   $("#task-list").empty();
-  $.each (tasks, function(index, task) {
-    $("#task-list").append("<li>" + task['name'] + "</li>");
+  $.each (tasks, function(index, taskJson) {
+    var task = JSON.parse(taskJson);
+    var taskImage = (task.complete) ? "checked.gif" : "unchecked.png";
+    var imgHTML = "<img src='/images/" + taskImage + "'>";
+    var taskToggleLink = "<a href='/tasks/" + task._id + "/toggle_complete?_method=put'>" + imgHTML + "</a>";
+    $("#task-list").append("<li>" + taskToggleLink + task['name'] + "</li>");
   });
   $("#task-list").effect("highlight", {}, 1500);
 }
@@ -27,7 +30,7 @@ $(document).ready(function() {
     var messageType = message['type'];
     switch(messageType) {
     case "task-created" :
-      var bookId = message['bookId'];
+      var bookId = message['taskBookId'];
       if (bookId == currentBookId()) {
         $.ajax({ url: '/books/' + bookId + ".json",
                  success: function(data) {
