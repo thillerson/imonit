@@ -5,7 +5,7 @@ $(document).ready(function() {
     var messageType = message['type'];
     switch(messageType) {
     case "book-created" :
-      var book = message['book'];
+      var book = JSON.parse(message['book']);
       var bookId = book['_id'];
       var itemId = "li#" + bookId;
       
