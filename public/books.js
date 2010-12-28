@@ -5,6 +5,10 @@ $.ajaxSetup({
   contentType: "application/json; charset=utf-8"
 });
 
+function toggleImageForTask(task) {
+  return (task['complete']) ? "/images/checked.gif" : "/images/unchecked.png"; 
+}
+
 function currentBookId() {
   var components = document.location.pathname.split('/');
   var id = components[2];
@@ -15,12 +19,20 @@ function updateTaskList(tasks) {
   $("#task-list").empty();
   $.each (tasks, function(index, taskJson) {
     var task = JSON.parse(taskJson);
-    var taskImage = (task.complete) ? "checked.gif" : "unchecked.png";
+    var taskImage = toggleImageForTask(task);
     var imgHTML = "<img src='/images/" + taskImage + "'>";
     var taskToggleLink = "<a href='/tasks/" + task._id + "/toggle_complete?_method=put'>" + imgHTML + "</a>";
-    $("#task-list").append("<li>" + taskToggleLink + task['name'] + "</li>");
+    $("#task-list").append("<li id='" + task['_id'] + "'>" + taskToggleLink + task['name'] + "</li>");
   });
   $("#task-list").effect("highlight", {}, 1500);
+}
+
+function setTaskCheckedOrUnchecked(task) {
+  var imageSrc = toggleImageForTask(task);
+  var taskLI = $("li#" + task['_id']);
+  var taskImg = taskLI.find("img");
+  taskImg.attr("src", imageSrc);
+  taskLI.effect("highlight", {}, 1500);
 }
 
 $(document).ready(function() {
@@ -38,6 +50,10 @@ $(document).ready(function() {
                  }
                });
       }
+      break;
+    case "task-toggled" :
+      setTaskCheckedOrUnchecked(JSON.parse(message['task']));
+      break;
     }
   });
 });
