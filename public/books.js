@@ -52,7 +52,8 @@ $(document).ready(function() {
       }
       break;
     case "task-toggled" :
-      setTaskCheckedOrUnchecked(JSON.parse(message['task']));
+      var task = (typeof(message['task']) == "object") ? message['task'] : JSON.parse(message['task']);
+      setTaskCheckedOrUnchecked(task);
       break;
     }
   });
