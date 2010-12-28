@@ -18,9 +18,9 @@ function currentBookId() {
 function updateTaskList(tasks) {
   $("#task-list").empty();
   $.each (tasks, function(index, taskJson) {
-    var task = JSON.parse(taskJson);
+    var task = (typeof(taskJson) == "object") ? taskJson : JSON.parse(taskJson);
     var taskImage = toggleImageForTask(task);
-    var imgHTML = "<img src='/images/" + taskImage + "'>";
+    var imgHTML = "<img src='" + taskImage + "'>";
     var taskToggleLink = "<a href='/tasks/" + task._id + "/toggle_complete?_method=put'>" + imgHTML + "</a>";
     $("#task-list").append("<li id='" + task['_id'] + "'>" + taskToggleLink + task['name'] + "</li>");
   });
